@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Agents</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f3f4f6;
+            color: #1f2937;
+        }
+        .fixed-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 50;
+        }
+    </style>
+</head>
+<body class="flex flex-col min-h-screen">
+    <!-- Header Section -->
+    <header class="fixed-header w-full bg-white shadow-lg p-4 flex justify-between items-center rounded-b-xl border-t-4 border-indigo-500">
+        <a href="index.html" class="text-2xl font-bold text-indigo-600 hover:text-indigo-800 transition-colors duration-300">
+            Generative AI bootcamp
+        </a>
+    </header>
+    <main class="flex-grow py-8 px-4 md:px-8 lg:px-16 mt-[60px] md:mt-[80px]">
+        <div class="max-w-3xl mx-auto">
+            <!-- Main page heading -->
+            <h1 class="text-4xl md:text-5xl font-extrabold text-gray-800 mb-6 leading-tight">
+                LangGraph and Multi-Agent AI Orchestration
+            </h1>
+            
+            <!-- Content starts here -->
+            <h1>4 Surprising Truths About Building Real-World AI Agents</h1>
+<br> <br> 
+The current excitement around AI agents is palpable. For many developers, the journey begins with a simple idea: an intelligent bot that takes a prompt and follows a linear sequence of steps to complete a task. This perception of agents as straightforward, chain-of-thought executors is a common and useful starting point, but it's only the first step on a much longer road.
+Building robust, enterprise-grade agentic systems requires a fundamental shift in mindset. It's a discipline that is less about perfecting a single prompt and more about holistic systems architecture. The real challenge isn't just getting an AI to think, but getting a network of AIs to work together reliably, scalably, and securely.
+This article shares four counter-intuitive but critical truths learned from building complex, multi-agent AI systems. We'll explore how emerging frameworks like LangGraph and architectural patterns like control planes are moving the field beyond simple bots and into the realm of true distributed systems engineering.
+<br> <br> 
+1. The Future of AI Orchestration Looks Like "Kubernetes for LLMs"
+While the allure of AI agents often lies in their autonomy, the first surprising truth is that making them work at scale requires centralized control. This is achieved through a multi-agent control plane, a central management layer that separates an agent's "thinking" from the operational complexities of its environment. This architectural pattern handles the difficult parts of orchestration, containing components like a Request Router to dispatch tasks, a Registration/Discovery Module to know what tools are available, and an Invocation/Execution Engine to manage the actual work.
+This is a powerful shift because it moves the burden of coordination away from the individual agents and into a dedicated, governable layer. This makes the entire system more modular and scalable. Agents can be developed to focus on their specific domain tasks, while the control plane provides a unified interface for tool access, security, and monitoring. This separation of concerns is a classic principle of distributed systems, now being applied to AI agents.
+It acts much like the control plane in cloud systems – essentially “Kubernetes for language models”.
+<br> <br> 
+2. Your AI Workflow Isn't a Chain, It's a Graph
+Many developers start building AI workflows with simple, linear sequences—a pattern common in basic LangChain implementations. The surprising truth here is that real-world problems are rarely so straightforward. Business processes involve branching logic, retries, and decision points that a simple chain cannot easily model.
+This is where frameworks like LangGraph introduce a critical evolution: modeling AI workflows as a graph instead of a chain. In this model, agents are modeled as nodes, and conditional transitions between them form the edges. This structure unlocks capabilities that are essential for enterprise use cases, including stateful execution, cycles for retries or refinement, and the ability to pause for human-in-the-loop feedback.
+This shift is crucial because it allows AI systems to manage long-running tasks that can survive failures. By enabling "durable execution" and "checkpointing progress," a graph-based workflow can run for hours or even days, resuming after an interruption. A simple, one-shot request is no longer the only option. For instance, a customer support application can be modeled as a graph where an initial agent classifies a ticket, a conditional edge routes it to a compliance agent if needed, and another edge can escalate it to a human supervisor—all while maintaining the state of the case throughout the process.
+<br> <br> 
+3. Building Enterprise Agents Is a DevOps Problem
+Perhaps the most grounding truth for those new to the field is this: while the core may be AI, building a production-ready agentic system is fundamentally a DevOps and cloud architecture problem. Scaling an agent from a prototype script to a reliable service requires an infrastructure that will be immediately familiar to any software engineer, revealing that the "AI" is just one component in a much larger system.
+Successfully deploying and managing a multi-agent system involves established architectural patterns. Key components often include:
+• Deploying agents as microservices, using containers or serverless functions so they can scale independently.
+• Using an event-driven architecture with message queues (like Pub/Sub) to decouple agents and manage communication.
+• The need for centralized logging and tracing to provide observability into complex, distributed interactions between agents.
+• Implementing CI/CD pipelines to automate the testing and deployment of agent code and configurations.
+This is a surprising realization because it demystifies "AI agents" by grounding them in concrete engineering practices. A common reference architecture on GCP demonstrates this perfectly, using Vertex AI for inference, Google Pub/Sub for messaging, and stateless Cloud Run functions for the agent microservices. Building for production means thinking about state management, fault tolerance, and monitoring—challenges solved in traditional software.
+<br> <br> 
+4. Simple "Function Calling" Is Just the Tip of the Iceberg
+OpenAI's Function Calling is a powerful mechanism that allows an LLM to invoke a specific tool or API. It's a foundational capability for any agent. However, the surprising truth is that this feature represents a single building block, not the entire architecture. It is a one-step, single-tool interaction for a single LLM.
+This stands in stark contrast to the goal of orchestration frameworks like LangGraph or control-plane architectures. These systems are designed to manage complex workflows that involve multiple agents, multiple tools, and multiple steps over potentially long periods. They are built to handle state, branching logic, and the coordination of an entire fleet of specialized agents.
+In a sophisticated agentic system, function calling is merely one primitive action an agent might take within a much larger, stateful process. The orchestration framework is the brain that decides which agent should act, when it should act, and what happens next, managing the entire lifecycle of the task.
+It is not a multi-agent system: it doesn’t manage multiple LLMs or long-running tasks. In comparison, LangGraph and control-plane systems are full orchestration frameworks, while function calling is a simpler mechanism for extending an LLM with tools.
+<br> <br> 
+Conclusion: Thinking Like an Architect
+The journey from a simple prompt-driven bot to a robust, multi-agent system is a journey from prompting to architecture. The four truths reveal a cohesive vision: we define our logic as a stateful graph (Truth 2), which is the blueprint for our application. This application is deployed across a DevOps-style infrastructure of microservices and message queues (Truth 3). This entire system is governed by a control plane that handles routing and policy (Truth 1), and within this system, individual agents use primitives like function calling to perform discrete actions (Truth 4). Building sophisticated AI agents requires us to think in terms of stateful graphs, event-driven communication, and centralized governance.
+By embracing established principles from cloud computing and DevOps, we can build AI systems that are not only intelligent but also scalable, resilient, and governable. As these agentic systems become the new application back-end, how will it change our definition of a "full-stack" developer?
+
+            <a href="index.html" class="inline-block text-indigo-600 font-medium hover:text-indigo-800 transition-colors duration-200 mt-4">
+                ← Back to Blog
+            </a>
+        </div>
+    </main>
+    <footer class="bg-gray-800 text-white text-center py-6 px-4 md:px-8 rounded-t-xl">
+        <p class="text-sm">&copy; 2025 Andrew Rivers. All rights reserved.</p>
+    </footer>
+</body>
+</html>

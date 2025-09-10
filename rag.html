@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Agents</title>
+    <!-- Tailwind CSS CDN for a mobile-first, modern design -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f3f4f6;
+            color: #1f2937;
+        }
+        .fixed-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 50;
+        }
+    </style>
+</head>
+<body class="flex flex-col min-h-screen">
+    <!-- Header Section -->
+    <header class="fixed-header w-full bg-white shadow-lg p-4 flex justify-between items-center rounded-b-xl border-t-4 border-indigo-500">
+        <a href="index.html" class="text-2xl font-bold text-indigo-600 hover:text-indigo-800 transition-colors duration-300">
+            Generative AI bootcamp
+        </a>
+    </header>
+    <main class="flex-grow py-8 px-4 md:px-8 lg:px-16 mt-[60px] md:mt-[80px]">
+        <div class="max-w-3xl mx-auto">
+            <h1 class="text-4xl md:text-5xl font-extrabold text-gray-800 mb-6 leading-tight">Understanding AI Agents</h1>
+            <p class="text-lg text-gray-600 leading-relaxed mb-6">
+                <!-- Paste the full content from your 'ai-agents.txt' file here -->
+                5 Surprising Truths I Learned Building Advanced RAG Systems
+<br><br>
+If you've spent any time in the world of Large Language Models (LLMs), you've heard of Retrieval-Augmented Generation, or RAG. On the surface, it's a beautifully simple idea: when a user asks a question, you find some relevant documents and stuff them into the prompt for the LLM to use. Problem solved, right?
+That's what I thought, too. But moving from a basic prototype to a robust, production-grade RAG system is a journey from brute force to surgical precision. You quickly learn that the simple "retrieve-then-generate" model hides a world of nuance. The most effective systems aren't just data pipelines; they are elegant architectures built on a series of counter-intuitive truths.
+This post distills the five most surprising and impactful lessons I learned building advanced RAG systems. These are the truths that separate a demo-quality chatbot from one that delivers consistently accurate and relevant answers.
+<br><br>1. Chunking Isn't Just Splitting; It's a Strategic Choice
+The first step away from brute force is realizing that how you break down information is as important as the information itself. Before indexing, documents must be split into chunks to fit within an embedding model's context window, which might be around 500 tokens for older models, though newer ones can handle more. This is a critical architectural decision.
+The naive approach is "fixed-size" chunking. The problem is that this method has no respect for meaning; it will slice a sentence in half without a second thought, destroying the context you're trying to preserve. While suitable for uniform content like logs or code, it’s a poor choice for prose.
+A much smarter default is "recursive splitting," which is the approach used by LangChain's default RecursiveCharacterTextSplitter. This strategy respects the document's structure, attempting to split first on paragraphs, then sentences. As a best practice, you should start here.
+But for maximum precision, the most advanced strategy is "semantic chunking." This method uses embeddings to group semantically similar sentences together, creating chunks based on ideas, not arbitrary lengths. The key insight is that this aligns your chunks with the concepts a user is likely to query. It comes with the trade-off of extra computation and tuning, but for high-stakes applications, the impact on retrieval quality is profound.
+<br><br>2. The Best Retrieval Is a Two-Step Process
+The standard retrieval process is a single-step, high-speed search. You embed a query, find the nearest neighbors in a vector database using a "bi-encoder," and call it a day. This is a classic "fast, high-recall" operation designed to cast a wide net.
+The problem is that compressing an entire paragraph into a single vector inevitably leads to "information loss." The vector might capture the main topic, but subtle, critical details can be lost.
+Advanced RAG systems solve this with a two-stage process: retrieval followed by reranking.
+1. Retrieve: First, use the fast bi-encoder to fetch a larger-than-needed set of candidate documents (e.g., retrieve 20 chunks to ultimately use 5). This prioritizes recall.
+2. Rerank: Next, use a more powerful but slower "cross-encoder" for a "slow, high-precision" check. It examines the query and the full text of each candidate document together to calculate a more accurate relevance score.
+As an architect, you are consciously accepting higher latency in the second step in exchange for a dramatic boost in precision. This two-step dance is a perfect example of moving from brute force to a more refined, intelligent process.
+Reranking ensures that the most contextually relevant information is fed to the LLM, overcoming the information loss of the initial retrieval and dramatically improving the precision of the final selection.
+<br><br>3. A Smart Chatbot First Rewrites Your Question
+Imagine a simple chat interaction:
+• User: "What is RAG?"
+• Bot: [Gives a great answer about Retrieval-Augmented Generation.]
+• User: "How does it work?"
+The simple approach of embedding the follow-up question "How does it work?" will fail. The query is ambiguous; it's missing the crucial context ("RAG") from the previous turn.
+Truly conversational RAG systems have a secret first step: query reformulation. Before attempting retrieval, they use an LLM to rewrite the user's latest message into a self-contained question. In modern LangChain (v0.3+), this is elegantly handled by a component like create_history_aware_retriever. It takes the chat history and the new question and synthesizes them into a standalone query, transforming "How does it work?" into "How does Retrieval-Augmented Generation (RAG) work?"
+This reformulation step ensures the retrieval system is always operating on a clear, unambiguous question, making the entire conversational experience feel seamless and intelligent.
+<br><br>4. You Can Retrieve a Sentence but Use the Whole Chapter
+As a system architect, you face a paradox when choosing chunk size: if you embed small, precise sentences, your LLM starves for context. If you embed large paragraphs, your retriever struggles to find the needle in the haystack.
+An elegant solution exists that gives you the best of both worlds: the ParentDocumentRetriever.
+This technique works in two simple steps:
+1. First, you split your documents into small, fine-grained "child chunks" (e.g., individual sentences). These are what get embedded and indexed, allowing for highly precise vector matching against a user's query.
+2. Then, when a query successfully matches one of these small child chunks, the system doesn't return that tiny piece of text. Instead, it retrieves and returns the larger "parent" document that the child chunk came from—for example, the entire section or chapter.
+This strategy combines the precision of a focused search with the rich context an LLM needs to formulate a comprehensive answer. You get the accuracy of small-chunk retrieval and the completeness of a large-document context.
+5. The Best Context is Compressed, Not Cluttered
+The final act of surgical precision is realizing that even after careful retrieval, the context you provide the LLM can still be improved. With modern LLMs boasting massive 128K+ token context windows, it's tempting to think more is always better.
+This is a fallacy. Simply stuffing the context window can introduce noise and trigger the "lost in the middle" problem, where LLMs tend to ignore information buried in a long prompt.
+The advanced technique to solve this is "contextual compression." Using a component like LangChain's ContextualCompressionRetriever with an LLMChainExtractor, you add an intelligent filtering step after retrieval but before generation. After an initial retrieval fetches a set of documents, this component makes another LLM call to go through each one and extract only the sentences directly relevant to the query.
+In production, this translates to a deliberate trade-off: you invest in the latency and cost of an extra LLM call to ensure the final prompt contains only the most potent, relevant information. This filter trims the fat, reduces hallucinations, and leads to more focused answers.
+<br><br>Conclusion: From Brute Force to Surgical Precision
+Building a high-quality RAG system is a lesson in nuance. It’s less about the brute-force retrieval of data and more about a series of precise, intelligent filtering and refinement steps.
+We've seen how strategic chunking acts as the initial, careful incision; how reranking serves as fine-toothed forceps to isolate the most relevant tissue; how query rewriting sharpens the scalpel for each specific task; how the Parent Document Retriever enables a precise biopsy while providing the full tissue sample for analysis; and finally, how contextual compression trims away any remaining noise, ensuring only the most vital information reaches the final stage. Each step moves us from a noisy firehose of information to a surgical injection of exactly the right knowledge.
+This journey reveals that what appears simple on the surface is often a deep and fascinating architectural challenge. It leaves me wondering: as these systems become more complex, what other 'simple' parts of the AI stack are actually hiding a deep layer of nuance we've yet to appreciate?
+            </p>
+            <a href="index.html" class="inline-block text-indigo-600 font-medium hover:text-indigo-800 transition-colors duration-200 mt-4">
+                ← Back to Blog
+            </a>
+        </div>
+    </main>
+    <footer class="bg-gray-800 text-white text-center py-6 px-4 md:px-8 rounded-t-xl">
+        <p class="text-sm">&copy; 2025 Andrew Rivers. All rights reserved.</p>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI & LangChain Blog</title>
+    <!-- Tailwind CSS CDN for a mobile-first, modern design -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f3f4f6;
+            color: #1f2937;
+        }
+        /* Fixed position header for consistent navigation */
+        .fixed-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 50;
+        }
+        /* Smooth scrolling for jump links */
+        html {
+            scroll-behavior: smooth;
+        }
+    </style>
+</head>
+<body class="flex flex-col min-h-screen">
+
+    <!-- Header Section -->
+    <header class="fixed-header w-full bg-white shadow-lg p-4 flex justify-between items-center rounded-b-xl border-t-4 border-indigo-500">
+        <a href="index.html" class="text-2xl font-bold text-indigo-600 hover:text-indigo-800 transition-colors duration-300">
+            Generative AI bootcamp 
+        </a>
+    </header>
+
+    <!-- Main Content Wrapper to fix desktop layout -->
+    <div class="flex-1 flex flex-col pt-[60px] md:pt-[80px]">
+        
+        <!-- Main Content Container -->
+        <main class="flex-grow py-8 px-4 md:px-8 lg:px-16 overflow-y-auto">
+            
+            <!-- Main Blog Title Section -->
+            <section id="top" class="bg-indigo-400 text-white rounded-xl shadow-xlg p-8 mb-8 text-center">
+                <h1 class="text-4xl md:text-5xl font-extrabold mb-4 leading-tight">Navigating the World of AI</h1>
+                <p class="text-lg md:text-xl opacity-90">A journey into Generative AI, intelligent agents, and the powerful frameworks that connect them.</p>
+            </section>
+
+            <!-- Blog Content Sections (Placeholder Content) -->
+            <div class="max-w-3xl mx-auto">
+                <!-- Section 1: AI Agents -->
+                <section id="ai-agents" class="bg-white rounded-xl shadow-lg p-6 md:p-10 mb-8 border-l-4 border-indigo-500">
+                    <h2 class="text-3xl font-bold text-gray-800 mb-4">Generative AI & Machine Learning Fundamentals</h2>
+                    <p class="text-lg text-gray-600 leading-relaxed mb-4">
+                        Welcome to the fascinating world of Artificial Intelligence (AI) and Machine Learning (ML)
+                    </p>
+                    <a href="gen_ai.html" class="inline-block text-indigo-600 font-medium hover:text-indigo-800 transition-colors duration-200">
+                        Read More
+                    </a>
+                </section>
+
+                <!-- Section 2: Generative AI -->
+                <section id="gen-ai" class="bg-white rounded-xl shadow-lg p-6 md:p-10 mb-8 border-l-4 border-indigo-500">
+                    <h2 class="text-3xl font-bold text-gray-800 mb-4">LLM Internals and API Integration</h2>
+                    <p class="text-lg text-gray-600 leading-relaxed mb-4">
+                       Modern AI models like GPT-4 have become a part of our daily digital lives, performing tasks that feel nothing short of magical. 
+                    </p>
+                    <a href="llm_internals.html" class="inline-block text-indigo-600 font-medium hover:text-indigo-800 transition-colors duration-200">
+                        Read More
+                    </a>
+                </section>
+
+                <!-- Section 3: LangChain -->
+                <section id="langchain" class="bg-white rounded-xl shadow-lg p-6 md:p-10 mb-8 border-l-4 border-indigo-500">
+                    <h2 class="text-3xl font-bold text-gray-800 mb-4">LangGraph and Multi-Agent AI Orchestration</h2>
+                    <p class="text-lg text-gray-600 leading-relaxed mb-4">
+                        Introduction: From Simple Bots to Complex Systems
+                    </p>
+                    <a href="langgraph.html" class="inline-block text-indigo-600 font-medium hover:text-indigo-800 transition-colors duration-200">
+                        Read More
+                    </a>
+                </section>
+                
+                <!-- Section 4 -->
+                <section id="file-4" class="bg-white rounded-xl shadow-lg p-6 md:p-10 mb-8 border-l-4 border-indigo-500">
+                    <h2 class="text-3xl font-bold text-gray-800 mb-4">Advanced LangChain and Local LLM Deployment</h2>
+                    <p class="text-lg text-gray-600 leading-relaxed">
+                       This article will uncover five surprising and impactful concepts from the world of advanced LLM development.
+                    </p>
+                    <a href="advanced_langchain.html" class="inline-block text-indigo-600 font-medium hover:text-indigo-800 transition-colors duration-200">
+                        Read More
+                    </a>
+                </section>
+
+                <!-- Section 5 -->
+                <section id="file-5" class="bg-white rounded-xl shadow-lg p-6 md:p-10 mb-8 border-l-4 border-indigo-500">
+                    <h2 class="text-3xl font-bold text-gray-800 mb-4">RAG Deep Dive: Architectures, Components, and Deployment</h2>
+                    <p class="text-lg text-gray-600 leading-relaxed">
+                        This post distills the five most surprising and impactful lessons I learned building advanced RAG systems.
+                    </p>
+                    <a href="rag.html" class="inline-block text-indigo-600 font-medium hover:text-indigo-800 transition-colors duration-200">
+                        Read More
+                    </a>
+                </section>
+
+                <!-- Section 6 -->
+                <section id="file-6" class="bg-white rounded-xl shadow-lg p-6 md:p-10 mb-8 border-l-4 border-indigo-500">
+                    <h2 class="text-3xl font-bold text-gray-800 mb-4">AI Agent Architectures and Multi-Agent Coordination</h2>
+                    <p class="text-lg text-gray-600 leading-relaxed">
+                        AI Agents Aren't Magic. They're Architectural Marvels. Here's How They Work.
+                    </p>
+                    <a href="ai_agents.html" class="inline-block text-indigo-600 font-medium hover:text-indigo-800 transition-colors duration-200">
+                        Read More
+                    </a>
+                </section>
+
+                <!-- Section 7 -->
+                <section id="file-7" class="bg-white rounded-xl shadow-lg p-6 md:p-10 mb-8 border-l-4 border-indigo-500">
+                    <h2 class="text-3xl font-bold text-gray-800 mb-4">LangGraph: Core Concepts and Production Readiness</h2>
+                    <p class="text-lg text-gray-600 leading-relaxed">
+                        LangGraph represents a fundamental architectural shift.
+                    </p>
+                    <a href="langgraph_core.html" class="inline-block text-indigo-600 font-medium hover:text-indigo-800 transition-colors duration-200">
+                        Read More
+                    </a>
+                </section>
+            </div>
+        
+        </main>
+
+        <!-- Simple Footer -->
+        <footer class="bg-gray-800 text-white text-center py-6 px-4 md:px-8 rounded-t-xl">
+            <p class="text-sm">&copy; 2025 Andrew Rivers. All rights reserved.</p>
+        </footer>
+
+    </div>
+
+    <!-- JavaScript for Mobile Menu Toggle and Gemini API Call -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const promptInput = document.getElementById('prompt-input');
+            const generateButton = document.getElementById('generate-button');
+            const loadingIndicator = document.getElementById('loading-indicator');
+            const generatedContent = document.getElementById('generated-content');
+
+            generateButton.addEventListener('click', async () => {
+                const userPrompt = promptInput.value.trim();
+
+                if (userPrompt === "") {
+                    // Using a custom message box instead of alert()
+                    generatedContent.innerHTML = '<p class="text-red-500">Please enter a topic to generate a blog post.</p>';
+                    generatedContent.classList.remove('hidden');
+                    return;
+                }
+
+                loadingIndicator.classList.remove('hidden');
+                generatedContent.classList.add('hidden');
+                generatedContent.innerHTML = '';
+
+                const apiKey = ""; // API key is provided by the canvas environment
+                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
+
+                const systemPrompt = `Act as a professional technical writer and blogger. Your task is to generate a comprehensive and engaging blog post about the topic provided by the user.
+                    The blog post should be well-structured, including a clear title and a detailed main body.
+                    The response should be in JSON format with two keys: "title" (string) and "content" (string).`;
+
+                const payload = {
+                    contents: [{ parts: [{ text: userPrompt }] }],
+                    systemInstruction: { parts: [{ text: systemPrompt }] },
+                    generationConfig: {
+                        responseMimeType: "application/json",
+                        responseSchema: {
+                            type: "OBJECT",
+                            properties: {
+                                "title": { "type": "STRING" },
+                                "content": { "type": "STRING" }
+                            }
+                        }
+                    }
+                };
+
+                let response;
+                try {
+                    response = await fetch(apiUrl, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+
+                    if (!response.ok) {
+                        throw new Error(`API call failed with status: ${response.status}`);
+                    }
+
+                    const result = await response.json();
+                    
+                    const candidate = result.candidates?.[0];
+
+                    if (candidate && candidate.content?.parts?.[0]?.text) {
+                        const jsonText = candidate.content.parts[0].text;
+                        const data = JSON.parse(jsonText);
+                        
+                        // Display the generated content
+                        generatedContent.innerHTML = `
+                            <h2 class="text-2xl font-bold mb-2">${data.title}</h2>
+                            <p class="text-base whitespace-pre-wrap">${data.content}</p>
+                        `;
+                        generatedContent.classList.remove('hidden');
+                    } else {
+                        generatedContent.innerHTML = '<p class="text-red-500">Could not generate content. Please try a different topic.</p>';
+                        generatedContent.classList.remove('hidden');
+                    }
+
+                } catch (error) {
+                    console.error("Error generating content:", error);
+                    generatedContent.innerHTML = `<p class="text-red-500">An error occurred while generating content. Please check the console for details.</p>`;
+                    generatedContent.classList.remove('hidden');
+                } finally {
+                    loadingIndicator.classList.add('hidden');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

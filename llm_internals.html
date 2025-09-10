@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Agents</title>
+    <!-- Tailwind CSS CDN for a mobile-first, modern design -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f3f4f6;
+            color: #1f2937;
+        }
+        .fixed-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 50;
+        }
+    </style>
+</head>
+<body class="flex flex-col min-h-screen">
+    <!-- Header Section -->
+    <header class="fixed-header w-full bg-white shadow-lg p-4 flex justify-between items-center rounded-b-xl border-t-4 border-indigo-500">
+        <a href="index.html" class="text-2xl font-bold text-indigo-600 hover:text-indigo-800 transition-colors duration-300">
+            Generative AI bootcamp
+        </a>
+    </header>
+    <main class="flex-grow py-8 px-4 md:px-8 lg:px-16 mt-[60px] md:mt-[80px]">
+        <div class="max-w-3xl mx-auto">
+            <h1 class="text-4xl md:text-5xl font-extrabold text-gray-800 mb-6 leading-tight">LLM Internals and API Integration</h1>
+            <p class="text-lg text-gray-600 leading-relaxed mb-6">
+                <!-- Paste the full content from your 'ai-agents.txt' file here -->
+                Beyond the Black Box: 4 Surprising Truths About How AI Like GPT-4 Really Works
+
+<br><br>
+Modern AI models like GPT-4 have become a part of our daily digital lives, performing tasks that feel nothing short of magical. They can write poetry, generate code, summarize complex documents, and carry on nuanced conversations. This incredible capability has led many to view these systems as monolithic, all-knowing digital brains.
+But what is actually happening "under the hood" when you send a query to one of these large language models (LLMs)? The reality is often more surprising, and arguably more fascinating, than the fiction. The "magic" is a product of clever, specific, and sometimes counter-intuitive engineering decisions.
+This article pulls back the curtain to reveal four of the most impactful facts about how systems like GPT-4 are built and operate. Moving beyond the hype, we’ll explore the specific architectural choices, training methods, and application frameworks that give rise to their powerful abilities.
+<br><br>1. GPT-4 Isn't One Giant Brain—It's a Committee of Specialists
+When you hear that GPT-4 has an estimated 1.8 trillion parameters, it's natural to imagine a single, gargantuan neural network processing your request. The surprising truth is that it doesn't use all of those parameters for any single query. Instead, GPT-4 is built on an architecture known as a "Mixture of Experts" (MoE).
+The model is divided into approximately 16 distinct "expert" submodels. When you input a prompt, a routing mechanism activates only a couple of these experts to handle the task. This means that for any given inference, GPT-4 uses only about 280 billion of its 1.8 trillion parameters.
+This design is a clever solution to the problem of scale. It allows the overall model to be immense—enabling different experts to develop specialized knowledge in different niches—while keeping the computational cost of running a single query manageable. It's less like a single brain and more like a committee of specialists where only the most relevant members are called upon to solve a problem.
+Beyond its expert committee, GPT-4's architecture introduces other remarkable scaling achievements. It features a dramatically expanded context window capable of processing around 32,000 tokens at once—enough to analyze long documents in a single pass. Furthermore, it is multimodal, meaning it can accept and reason about image inputs alongside text, adding a visual specialist to its versatile committee.
+<br><br>2. At Its Core, It's a World-Class Autocomplete
+Despite its ability to seemingly reason, plan, and follow complex instructions, the fundamental training objective of a model like GPT-4 is astonishingly simple: unsupervised next-token prediction. At its core, the model is a highly sophisticated autocomplete engine.
+During its initial training on vast amounts of text from the internet and books, the model’s only goal was to learn to predict the most probable next word (or "token") in a sequence. By doing this billions of times over, it developed an incredibly deep statistical understanding of the patterns, grammar, logic, and concepts embedded in human language.
+This simple objective is the source of both its greatest strengths and its most well-known weaknesses. It’s why LLMs can generate such coherent, contextually aware, and human-like text. However, because the model's primary goal is probabilistic prediction rather than factual recall from a database, it is also prone to issues like "hallucinations" and factual errors. It's not recalling facts; it's predicting what a factually correct statement should look like.
+<br><br>3. Human Taste Is the Secret Ingredient for a Helpful AI
+The raw, pre-trained model that emerges from the next-token prediction phase is not what users typically interact with. On its own, it is powerful but not necessarily helpful, safe, or aligned with human expectations. To transform it into a useful assistant, developers add a critical secret ingredient: human preference.
+This is achieved through a process called Reinforcement Learning from Human Feedback (RLHF). In this stage, human labelers are shown multiple outputs from the model in response to a prompt and are asked to rate them based on quality, helpfulness, and safety. This data is used to train a separate "reward model" that learns to score outputs according to human taste. Finally, the original LLM is fine-tuned using this reward model as a guide, training it to produce responses that will score highly.
+This RLHF process is what teaches the model to follow instructions, adopt a helpful conversational style, and avoid generating harmful content. For instance, this is precisely the method that was used to create ChatGPT from a GPT-3.5 model, fine-tuning it specifically for dialogue.
+<br><br>4. Advanced AI Agents Think Step-by-Step and Use "Tools"
+When you see an AI code assistant write an entire application, it's not solving that complex problem in a single, monolithic step. Instead, developers build sophisticated applications by creating "agentic reasoning loops" around the core language model.
+These agents are designed to break a problem down and "think" step-by-step, often using a structured format known as "chain-of-thought." This makes the AI's reasoning process explicit and transparent, which in turn makes it easier to debug. A common reasoning cycle includes these distinct steps:
+<br><br>• START: The agent begins by restating the user's intent to ensure it understands the goal.
+<br><br>• THINK: It then plans the sequence of steps required to fulfill that intent.
+<br><br>• TOOL: Based on its plan, it invokes a specific function, like generating a piece of code.
+<br><br>• OBSERVE: The agent receives the results or output from the tool it just used.
+<br><br>• OUTPUT: Finally, it synthesizes the information and delivers the final answer to the user.
+In this loop, the AI first plans its steps, then decides to use a specific "tool" to accomplish a sub-task. 
+<br><br>These tools are functions that the agent is given access to. For example, an agent might be able to call generate_code(prompt) to ask the LLM to write a snippet of code, or write_file to save that code to a file. The agent decides when to call these tools based on the user's request. A real-world project called "Majordomo" demonstrated this by using GPT-4 to "write code about writing code," building application skeletons and accelerating development by wrapping the model in an agentic framework.
+<br><br>Conclusion: The Engineered Intelligence
+The seemingly magical abilities of today's AI are not the product of a single, mysterious consciousness. Instead, they are the result of deliberate and ingenious engineering that combines massive scale with meticulous refinement and structured application design.
+The four key takeaways reveal a more grounded reality. The "Mixture of Experts" architecture enables massive scale while maintaining efficiency. The model's core function is a simple but powerful next-token prediction engine. Human feedback through RLHF is the crucial step that aligns this raw power with human values, making it helpful and safe. Finally, complex tasks are solved not by a single thought, but through structured, step-by-step reasoning loops where the AI uses tools like a craftsman.
+The "magic" of AI, therefore, is a testament to a deep and ongoing collaboration between machine scale and human guidance. It's an engineered intelligence, thoughtfully constructed piece by piece.
+As these systems become more integrated into our lives, what is the most important thing we should understand about how they truly work?
+            </p>
+            <a href="index.html" class="inline-block text-indigo-600 font-medium hover:text-indigo-800 transition-colors duration-200 mt-4">
+                ← Back to Blog
+            </a>
+        </div>
+    </main>
+    <footer class="bg-gray-800 text-white text-center py-6 px-4 md:px-8 rounded-t-xl">
+        <p class="text-sm">&copy; 2025 Andrew Rivers. All rights reserved.</p>
+    </footer>
+</body>
+</html>
